@@ -21,7 +21,10 @@ class StateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppCard(
       title: title,
-      content: content,
+      content: Text(
+        content,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
       // topLeftWidget widget as an Avatar
       topLeftWidget: SizedBox(
         height: 48.0,
