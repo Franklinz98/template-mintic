@@ -20,64 +20,70 @@ class _State extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Iniciar sesión",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Correo electrónico',
+      child: Center(
+        child: SingleChildScrollView(
+          key: Key("loginScroll"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Iniciar sesión",
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: passwordController,
-                obscureText: true,
-                obscuringCharacter: "*",
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Clave',
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          var result = await AuthManagement.signIn(
-                              email: emailController.text,
-                              password: passwordController.text);
-                          if (result) {
-                            Get.off(() => ContentPage());
-                          }
-                        },
-                        child: Text("Login")),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  key: Key("signInEmail"),
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Correo electrónico',
                   ),
-                )
-              ],
-            ),
-            TextButton(
-                onPressed: widget.onViewSwitch, child: Text("Registrarse")),
-            Spacer(),
-          ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  key: Key("signInPassword"),
+                  controller: passwordController,
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Clave',
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: ElevatedButton(
+                          key: Key("signInButton"),
+                          onPressed: () async {
+                            var result = await AuthManagement.signIn(
+                                email: emailController.text,
+                                password: passwordController.text);
+                            if (result) {
+                              Get.off(() => ContentPage());
+                            }
+                          },
+                          child: Text("Login")),
+                    ),
+                  )
+                ],
+              ),
+              TextButton(
+                  key: Key("toSignUpButton"),
+                  onPressed: widget.onViewSwitch,
+                  child: Text("Registrarse")),
+            ],
+          ),
         ),
       ),
     );

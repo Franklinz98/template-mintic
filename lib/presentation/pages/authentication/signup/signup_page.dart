@@ -21,78 +21,83 @@ class _State extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Creación de usuario",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Usuario',
+      child: Center(
+        child: SingleChildScrollView(
+          key: Key("signupScroll"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Creación de usuario",
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Correo electrónico',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: passwordController,
-                obscureText: true,
-                obscuringCharacter: "*",
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Clave',
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        var result = await AuthManagement.signUp(
-                            name: nameController.text,
-                            email: emailController.text,
-                            password: passwordController.text);
-                        if (result) {
-                          Get.off(() => ContentPage());
-                        }
-                      },
-                      child: Text("Registrar"),
-                    ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  key: Key("signUpName"),
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Usuario',
                   ),
-                )
-              ],
-            ),
-            TextButton(
-              onPressed: widget.onViewSwitch,
-              child: Text("Entrar"),
-            ),
-            Spacer(),
-          ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  key: Key("signUpEmail"),
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Correo electrónico',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  key: Key("signUpPassword"),
+                  controller: passwordController,
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Clave',
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: ElevatedButton(
+                        key: Key("signUpButton"),
+                        onPressed: () async {
+                          var result = await AuthManagement.signUp(
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text);
+                          if (result) {
+                            Get.off(() => ContentPage());
+                          }
+                        },
+                        child: Text("Registrar"),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              TextButton(
+                onPressed: widget.onViewSwitch,
+                child: Text("Entrar"),
+              ),
+            ],
+          ),
         ),
       ),
     );

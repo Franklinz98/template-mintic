@@ -28,6 +28,7 @@ class CustomAppBar extends AppBar {
             ),
             actions: [
               IconButton(
+                key: Key("signOutAction"),
                 icon: Icon(
                   Icons.logout,
                   color: Colors.black,
