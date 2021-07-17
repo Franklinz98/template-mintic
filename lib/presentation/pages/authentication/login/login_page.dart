@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:red_egresados/domain/use_case/auth_management.dart';
-import 'package:red_egresados/presentation/pages/content/index.dart';
+import 'package:red_egresados/domain/use_case/controller.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onViewSwitch;
+  final Controller controller;
 
-  const LoginPage({Key? key, required this.onViewSwitch}) : super(key: key);
+  const LoginPage(
+      {Key? key, required this.onViewSwitch, required this.controller})
+      : super(key: key);
 
   @override
   _State createState() => _State();
@@ -70,7 +72,8 @@ class _State extends State<LoginPage> {
                                 email: emailController.text,
                                 password: passwordController.text);
                             if (result) {
-                              Get.off(() => ContentPage());
+                              // User logged in, updating state
+                              widget.controller.updateUser(result);
                             }
                           },
                           child: Text("Login")),

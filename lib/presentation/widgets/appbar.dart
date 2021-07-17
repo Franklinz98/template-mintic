@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends AppBar {
+  final Widget tile;
   final String picUrl;
   final BuildContext context;
   final VoidCallback onSignOff;
@@ -9,6 +10,7 @@ class CustomAppBar extends AppBar {
   CustomAppBar(
       {Key? key,
       required this.context,
+      required this.tile,
       required this.picUrl,
       required this.onSignOff})
       : super(
@@ -20,12 +22,10 @@ class CustomAppBar extends AppBar {
                 minRadius: 18.0,
                 maxRadius: 18.0,
                 backgroundImage: NetworkImage(picUrl),
+                backgroundColor: Colors.grey[200],
               ),
             ),
-            title: Text(
-              'title'.toUpperCase(),
-              style: Theme.of(context).textTheme.headline1,
-            ),
+            title: tile,
             actions: [
               IconButton(
                 key: Key("signOutAction"),

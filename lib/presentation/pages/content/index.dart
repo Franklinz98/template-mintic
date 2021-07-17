@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:red_egresados/domain/use_case/auth_management.dart';
-import 'package:red_egresados/presentation/pages/authentication/index.dart';
+import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/appbar.dart';
 
@@ -10,37 +10,49 @@ import 'public_offers/index.dart';
 import 'states/index.dart';
 import 'users_offers/index.dart';
 
-class ContentPage extends StatefulWidget {
-  const ContentPage({Key? key}) : super(key: key);
+class ContentPage extends StatelessWidget {
+  // Dependency injection: State management controller
+  final Controller controller = Get.find();
 
-  @override
-  _State createState() => _State();
-}
+  // View title
+  Widget _getTitle(int index, BuildContext context) {
+    String _title;
+    switch (index) {
+      case 1:
+        _title = "Social";
+        break;
+      case 2:
+        _title = "Verificado";
+        break;
+      case 3:
+        _title = "Ubicaciones";
+        break;
+      case 4:
+        _title = "Perfil";
+        break;
+      default:
+        _title = "Estados";
+    }
+    return Text(
+      _title.toUpperCase(),
+      style: Theme.of(context).textTheme.headline1,
+    );
+  }
 
-class _State extends State<ContentPage> {
-  int _selectedIndex = 0;
-  Widget _content = UsersStates();
-
-  // NavBar action
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      switch (_selectedIndex) {
-        case 1:
-          _content = UsersOffers();
-          break;
-        case 2:
-          _content = PublicOffers();
-          break;
-        case 3:
-          _content = UsersLocation();
-          break;
-        case 4:
-          break;
-        default:
-          _content = UsersStates();
-      }
-    });
+  // View content
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 1:
+        return UsersOffers();
+      case 2:
+        return PublicOffers();
+      case 3:
+        return UsersLocation();
+      case 4:
+        return Container();
+      default:
+        return UsersStates();
+    }
   }
 
   // We create a Scaffold that is used for all the content pages
@@ -49,12 +61,16 @@ class _State extends State<ContentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        picUrl: 'https://uifaces.co/our-content/donated/gPZwCbdS.jpg',
+        key: Key("pageTitle"),
+        // Fetching state value, with reactivity using Obx
+        tile: Obx(() => _getTitle(controller.screenIndex.value, context)),
+        picUrl: "https://uifaces.co/our-content/donated/gPZwCbdS.jpg",
         context: context,
         onSignOff: () async {
           var result = await AuthManagement.signOut();
           if (result) {
-            Get.off(() => Authentication());
+            // User sign off, updating state
+            controller.updateUser(!result);
           }
         },
       ),
@@ -63,39 +79,40 @@ class _State extends State<ContentPage> {
           padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 500),
-            child: _content,
+            // Fetching state value, with reactivity using Obx
+            child: Obx(() => _getScreen(controller.screenIndex.value)),
           ),
         ),
       ),
       // Content screen navbar
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.lightbulb_outline_rounded),
-            label: 'Estados',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group_outlined),
-            label: 'Social',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.public_outlined),
-            label: 'Verificado',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.place_outlined),
-            label: 'Ubicación',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Perfil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: AppColors.mountainMeadow,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.lightbulb_outline_rounded),
+                label: 'Estados',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.group_outlined),
+                label: 'Social',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.public_outlined),
+                label: 'Verificado',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.place_outlined),
+                label: 'Ubicación',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined),
+                label: 'Perfil',
+              ),
+            ],
+            currentIndex: controller.screenIndex.value,
+            unselectedItemColor: Colors.black87,
+            selectedItemColor: AppColors.mountainMeadow,
+            onTap: controller.updateScreenIndex,
+          )),
     );
   }
 }

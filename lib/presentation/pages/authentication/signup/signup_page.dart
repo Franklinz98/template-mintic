@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:red_egresados/domain/use_case/auth_management.dart';
-import 'package:red_egresados/presentation/pages/content/index.dart';
+import 'package:red_egresados/domain/use_case/controller.dart';
 
 class SignUpPage extends StatefulWidget {
   final VoidCallback onViewSwitch;
+  final Controller controller;
 
-  const SignUpPage({Key? key, required this.onViewSwitch}) : super(key: key);
+  const SignUpPage(
+      {Key? key, required this.onViewSwitch, required this.controller})
+      : super(key: key);
 
   @override
   _State createState() => _State();
@@ -83,7 +85,8 @@ class _State extends State<SignUpPage> {
                               email: emailController.text,
                               password: passwordController.text);
                           if (result) {
-                            Get.off(() => ContentPage());
+                            // User signed up, updating state
+                            widget.controller.updateUser(result);
                           }
                         },
                         child: Text("Registrar"),
