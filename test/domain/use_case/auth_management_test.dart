@@ -2,6 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:red_egresados/domain/use_case/auth_management.dart';
 
 void main() {
+
+  // AuthManagement uses Auth for management
+  // Contrast method result with expected value
   test(
     "SignIn valid",
     () async {

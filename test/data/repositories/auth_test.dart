@@ -4,12 +4,17 @@ import 'package:red_egresados/data/repositories/auth.dart';
 void main() {
   Auth? auth;
 
+  // When test starts get a new instance of Auth
   setUp(() {
     auth = Auth();
   });
+
+  // When test ends remove used instance
   tearDown(() {
     auth = null;
   });
+
+  // Contrast method result with expected value
   test(
     "SignIn valid",
     () async {
