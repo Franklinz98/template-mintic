@@ -1,36 +1,31 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/presentation/pages/authentication/index.dart';
 import 'package:red_egresados/presentation/pages/content/index.dart';
 
 void main() {
-  testWidgets("signIn", (WidgetTester tester) async {
-    // Widgets Testing requires that the widgets we need to test have a unique key
-    final loginScroll = find.byKey(ValueKey("loginScroll"));
-    final emailField = find.byKey(ValueKey("signInEmail"));
-    final passwordField = find.byKey(ValueKey("signInPassword"));
-    final actionButton = find.byKey(ValueKey("signInButton"));
+  late Controller controller;
 
-    await mockNetworkImagesFor(() async {
-      // We begin the rendering of the main widgets
-      await tester.pumpWidget(GetMaterialApp(home: Authentication()));
-      await tester.drag(loginScroll, const Offset(0.0, -100));
-      // After trigger a drag action we wait for it to end
-      await tester.pump();
-      await tester.enterText(emailField, "barry.allen@example.com");
-      await tester.enterText(passwordField, "SuperSecretPassword!");
-      await tester.tap(actionButton);
-      // After entering needed text and tap on the button we wait
-      // that all animations end
-      await tester.pumpAndSettle();
+  setUp(() {
+    controller = Controller();
+    Get.put(controller);
+    ever(controller.currentUser, (bool user) {
+      if (user) {
+        Get.off(() => ContentPage());
+      } else {
+        Get.off(() => Authentication());
+      }
     });
-
-    // We expect to find the text 'TITLE' that is present in content
-    // page, that means that the authentication was successful
-    expect(find.text("TITLE"), findsOneWidget);
   });
+
+  // When test ends remove used instance
+  tearDown(() {});
 
   testWidgets("signUp", (WidgetTester tester) async {
     // Widgets Testing requires that the widgets we need to test have a unique key
@@ -57,9 +52,9 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    // We expect to find the text 'TITLE' that is present in content
+    // We expect to find the appBar widget that is present in content
     // page, that means that the authentication was successful
-    expect(find.text("TITLE"), findsOneWidget);
+    expect(find.byKey(ValueKey("pageTitle")), findsOneWidget);
   });
 
   testWidgets("signOut", (WidgetTester tester) async {
@@ -74,5 +69,31 @@ void main() {
     // We expect to find the text 'Iniciar sesión' that is present in authentication
     // page, that means that the logout was successful
     expect(find.text("Iniciar sesión"), findsOneWidget);
+  });
+
+  testWidgets("signIn", (WidgetTester tester) async {
+    // Widgets Testing requires that the widgets we need to test have a unique key
+    final loginScroll = find.byKey(ValueKey("loginScroll"));
+    final emailField = find.byKey(ValueKey("signInEmail"));
+    final passwordField = find.byKey(ValueKey("signInPassword"));
+    final actionButton = find.byKey(ValueKey("signInButton"));
+
+    await mockNetworkImagesFor(() async {
+      // We begin the rendering of the main widgets
+      await tester.pumpWidget(GetMaterialApp(home: Authentication()));
+      await tester.drag(loginScroll, const Offset(0.0, -100));
+      // After trigger a drag action we wait for it to end
+      await tester.pump();
+      await tester.enterText(emailField, "barry.allen@example.com");
+      await tester.enterText(passwordField, "SuperSecretPassword!");
+      await tester.tap(actionButton);
+      // After entering needed text and tap on the button we wait
+      // that all animations end
+      await tester.pumpAndSettle();
+    });
+
+    // We expect to find the appBar widget that is present in content
+    // page, that means that the authentication was successful
+    expect(find.byKey(ValueKey("pageTitle")), findsOneWidget);
   });
 }
