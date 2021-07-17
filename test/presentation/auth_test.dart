@@ -7,25 +7,33 @@ import 'package:red_egresados/presentation/pages/content/index.dart';
 
 void main() {
   testWidgets("signIn", (WidgetTester tester) async {
+    // Widgets Testing requires that the widgets we need to test have a unique key
     final loginScroll = find.byKey(ValueKey("loginScroll"));
     final emailField = find.byKey(ValueKey("signInEmail"));
     final passwordField = find.byKey(ValueKey("signInPassword"));
     final actionButton = find.byKey(ValueKey("signInButton"));
 
     await mockNetworkImagesFor(() async {
+      // We begin the rendering of the main widgets
       await tester.pumpWidget(GetMaterialApp(home: Authentication()));
       await tester.drag(loginScroll, const Offset(0.0, -100));
+      // After trigger a drag action we wait for it to end
       await tester.pump();
       await tester.enterText(emailField, "barry.allen@example.com");
       await tester.enterText(passwordField, "SuperSecretPassword!");
       await tester.tap(actionButton);
+      // After entering needed text and tap on the button we wait
+      // that all animations end
       await tester.pumpAndSettle();
     });
 
+    // We expect to find the text 'TITLE' that is present in content
+    // page, that means that the authentication was successful
     expect(find.text("TITLE"), findsOneWidget);
   });
 
   testWidgets("signUp", (WidgetTester tester) async {
+    // Widgets Testing requires that the widgets we need to test have a unique key
     final loginScroll = find.byKey(ValueKey('loginScroll'));
     final signupScroll = find.byKey(ValueKey('signupScroll'));
     final nameField = find.byKey(ValueKey("signUpName"));
@@ -49,6 +57,8 @@ void main() {
       await tester.pumpAndSettle();
     });
 
+    // We expect to find the text 'TITLE' that is present in content
+    // page, that means that the authentication was successful
     expect(find.text("TITLE"), findsOneWidget);
   });
 
@@ -61,6 +71,8 @@ void main() {
       await tester.pumpAndSettle();
     });
 
+    // We expect to find the text 'Iniciar sesión' that is present in authentication
+    // page, that means that the logout was successful
     expect(find.text("Iniciar sesión"), findsOneWidget);
   });
 }
