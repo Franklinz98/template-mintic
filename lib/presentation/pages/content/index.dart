@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:red_egresados/domain/use_case/auth_management.dart';
+import 'package:red_egresados/presentation/pages/authentication/index.dart';
 import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/appbar.dart';
 
@@ -48,7 +51,12 @@ class _State extends State<ContentPage> {
       appBar: CustomAppBar(
         picUrl: 'https://uifaces.co/our-content/donated/gPZwCbdS.jpg',
         context: context,
-        onSignOff: () {},
+        onSignOff: () async {
+          var result = await AuthManagement.signOut();
+          if (result) {
+            Get.off(() => Authentication());
+          }
+        },
       ),
       body: SafeArea(
         child: Padding(

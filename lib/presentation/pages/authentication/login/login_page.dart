@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:red_egresados/domain/use_case/auth_management.dart';
+import 'package:red_egresados/presentation/pages/content/index.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onViewSwitch;
@@ -57,8 +60,16 @@ class _State extends State<LoginPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child:
-                        ElevatedButton(onPressed: () {}, child: Text("Login")),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          var result = await AuthManagement.signIn(
+                              email: emailController.text,
+                              password: passwordController.text);
+                          if (result) {
+                            Get.off(() => ContentPage());
+                          }
+                        },
+                        child: Text("Login")),
                   ),
                 )
               ],

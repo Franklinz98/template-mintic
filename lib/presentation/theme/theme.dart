@@ -32,6 +32,7 @@ class MyTheme {
       textTheme: TextTheme(
         headline1: AppTextStyle.appBarTitle,
         headline2: AppTextStyle.cardTitle,
+        headline3: AppTextStyle.extraContentTitle,
         bodyText1: AppTextStyle.cardContent,
         caption: AppTextStyle.cardDetails,
       ),
@@ -68,6 +69,7 @@ class MyTheme {
       textTheme: TextTheme(
         headline1: AppTextStyle.appBarTitle,
         headline2: AppTextStyle.cardTitle,
+        headline3: AppTextStyle.extraContentTitle,
         bodyText1: AppTextStyle.cardContent,
         caption: AppTextStyle.cardDetails,
       ),

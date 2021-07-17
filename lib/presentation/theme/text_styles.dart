@@ -16,6 +16,12 @@ class AppTextStyle {
         color: AppColors.doveGray,
         fontWeight: FontWeight.w600,
       );
+  // Headline 3
+  static TextStyle get extraContentTitle => GoogleFonts.openSans(
+        fontSize: 14.0,
+        color: Colors.black87,
+        fontWeight: FontWeight.w700,
+      );
   // Bodytext 1
   static TextStyle get cardContent => GoogleFonts.roboto(
         fontSize: 16.0,

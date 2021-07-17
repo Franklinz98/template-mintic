@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'pages/content/index.dart';
+import 'package:get/get.dart';
+import 'pages/authentication/index.dart';
 import 'theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -8,10 +8,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: MyTheme.ligthTheme,
         darkTheme: MyTheme.darkTheme,
-        home: ContentPage());
+        home: Authentication());
   }
 }
