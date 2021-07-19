@@ -1,6 +1,5 @@
 class PublicJob {
-  String title, description, category, experience;
-  int payment;
+  String title, description, category, experience, payment;
 
   PublicJob(
       {required this.title,

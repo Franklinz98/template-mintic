@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:red_egresados/data/services/location.dart';
+import 'package:red_egresados/domain/models/location.dart';
+import 'package:red_egresados/domain/services/misiontic_interface.dart';
 import 'widgets/location_card.dart';
 
 class UsersLocation extends StatefulWidget {
@@ -10,7 +13,23 @@ class UsersLocation extends StatefulWidget {
 }
 
 class _State extends State<UsersLocation> {
-  final items = List<String>.generate(8, (i) => "Item $i");
+  late MisionTicService service;
+  late Future<List<UserLocation>> futureLocations;
+  late MyLocation location;
+
+  @override
+  void initState() {
+    super.initState();
+    service = LocationService();
+    location = MyLocation(
+        name: "Me",
+        id: "bxjgsuO0i9a8fMvP4inmdGl9F1h2",
+        lat: 11.019183,
+        long: -74.85077234);
+    futureLocations = service.fecthData(
+      map: location.toJson,
+    ) as Future<List<UserLocation>>;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +51,27 @@ class _State extends State<UsersLocation> {
         ),
         // ListView on remaining screen space
         Expanded(
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return LocationCard(
-                title: 'John Doe',
-                lat: 11.004556423794284,
-                long: -74.7217010498047,
-                distance: 25,
-                onUpdate: () {},
-              );
+          child: FutureBuilder<List<UserLocation>>(
+            future: futureLocations,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final items = snapshot.data!;
+                return ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    UserLocation location = items[index];
+                    return LocationCard(
+                      title: location.name,
+                      distance: location.distance,
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+
+              // By default, show a loading spinner.
+              return Center(child: CircularProgressIndicator());
             },
           ),
         ),

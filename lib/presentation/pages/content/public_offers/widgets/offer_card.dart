@@ -3,8 +3,7 @@ import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/card.dart';
 
 class OfferCard extends StatelessWidget {
-  final String title, content, arch, level;
-  final int payment;
+  final String title, content, arch, level, payment;
   final VoidCallback onCopy, onApply;
 
   // OfferCard constructor

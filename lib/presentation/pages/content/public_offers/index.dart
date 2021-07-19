@@ -19,8 +19,8 @@ class _State extends State<PublicOffers> {
   @override
   void initState() {
     super.initState();
-    service = WorkPool();
-    futureJobs = service.fecthData();
+    service = WorkPoolService();
+    futureJobs = service.fecthData() as Future<List<PublicJob>>;
   }
 
   @override
@@ -50,7 +50,7 @@ class _State extends State<PublicOffers> {
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

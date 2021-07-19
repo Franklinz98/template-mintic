@@ -4,16 +4,16 @@ import 'package:red_egresados/presentation/widgets/card.dart';
 
 class LocationCard extends StatelessWidget {
   final String title;
-  final double lat, long;
-  final double? distance;
+  final double? lat, long;
+  final int? distance;
   final VoidCallback? onUpdate;
 
   // PostCard constructor
   LocationCard(
       {Key? key,
       required this.title,
-      required this.lat,
-      required this.long,
+      this.lat,
+      this.long,
       this.distance,
       this.onUpdate})
       : super(key: key);
@@ -28,7 +28,9 @@ class LocationCard extends StatelessWidget {
       topLeftWidget: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Icon(
-          onUpdate != null ? Icons.my_location_outlined : Icons.near_me_outlined,
+          onUpdate != null
+              ? Icons.my_location_outlined
+              : Icons.near_me_outlined,
           color: AppColors.mountainMeadow,
         ),
       ),
@@ -50,14 +52,16 @@ class LocationCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Latitud:',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              Text(
-                'Longitud:',
-                style: Theme.of(context).textTheme.headline3,
-              ),
+              if (distance == null)
+                Text(
+                  'Latitud:',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              if (distance == null)
+                Text(
+                  'Longitud:',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
               if (distance != null)
                 Text(
                   'Distancia:',
