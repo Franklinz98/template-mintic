@@ -79,16 +79,10 @@ class _State extends State<SignUpPage> {
                       padding: const EdgeInsets.all(14.0),
                       child: ElevatedButton(
                         key: Key("signUpButton"),
-                        onPressed: () async {
-                          var result = await AuthManagement.signUp(
-                              name: nameController.text,
-                              email: emailController.text,
-                              password: passwordController.text);
-                          if (result) {
-                            // User signed up, updating state
-                            widget.controller.updateUser(result);
-                          }
-                        },
+                        onPressed: () async => AuthManagement.signUp(
+                            name: nameController.text,
+                            email: emailController.text,
+                            password: passwordController.text),
                         child: Text("Registrar"),
                       ),
                     ),

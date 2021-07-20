@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:red_egresados/domain/repositories/auth.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/presentation/pages/authentication/index.dart';
 import 'package:red_egresados/presentation/pages/content/index.dart';
@@ -28,6 +30,10 @@ class _AppState extends State<App> {
       // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
       setState(() {
+        // Listering for auth state changes
+        AuthInterface.authStream.listen(
+          (User? user) => controller.updateUser(user),
+        );
         _initialized = true;
       });
     } catch (e) {
@@ -41,10 +47,10 @@ class _AppState extends State<App> {
   @override
   void initState() {
     // State management: listening for changes on currentUser
-    ever(controller.currentUser, (bool user) {
+    ever(controller.currentUser, (User? user) {
       // Using Get.off so we can't go back when auth changes
       // This navigation triggers automatically when auth state changes on the app state
-      if (user) {
+      if (user != null && _initialized) {
         Get.off(() => ContentPage());
       } else {
         Get.off(() => Authentication());
@@ -60,6 +66,8 @@ class _AppState extends State<App> {
     // Show error message if initialization failed
     if (_error) {
       return MaterialApp(
+        theme: MyTheme.ligthTheme,
+        darkTheme: MyTheme.darkTheme,
         home: Center(
           child: Text("Hubo un error con Firebase"),
         ),
@@ -69,6 +77,8 @@ class _AppState extends State<App> {
     // Show a loader until FlutterFire is initialized
     if (!_initialized) {
       return MaterialApp(
+        theme: MyTheme.ligthTheme,
+        darkTheme: MyTheme.darkTheme,
         home: Center(
           child: CircularProgressIndicator(),
         ),

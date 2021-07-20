@@ -1,31 +1,31 @@
-import 'package:red_egresados/data/repositories/auth.dart';
+import 'package:red_egresados/data/repositories/firebase_auth.dart';
 
 class AuthManagement {
-  static final Auth _auth = Auth();
+  static final PasswordAuth _auth = PasswordAuth();
 
-  static Future<bool>  signIn(
+  static Future<void> signIn(
       {required String email, required String password}) async {
     try {
-      return await _auth.signIn(email: email, password: password);
+      await _auth.signIn(email: email, password: password);
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future<bool> signUp(
+  static Future<void> signUp(
       {required String name,
       required String email,
       required String password}) async {
     try {
-      return await _auth.signUp(name: name, email: email, password: password);
+      await _auth.signUp(name: name, email: email, password: password);
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future<bool> signOut() async {
+  static Future<void> signOut() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
     } catch (e) {
       rethrow;
     }

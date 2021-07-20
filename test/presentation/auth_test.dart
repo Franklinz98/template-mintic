@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -12,8 +13,10 @@ void main() {
   setUp(() {
     controller = Controller();
     Get.put(controller);
-    ever(controller.currentUser, (bool user) {
-      if (user) {
+    ever(controller.currentUser, (User? user) {
+      // Using Get.off so we can't go back when auth changes
+      // This navigation triggers automatically when auth state changes on the app state
+      if (user != null) {
         Get.off(() => ContentPage());
       } else {
         Get.off(() => Authentication());
