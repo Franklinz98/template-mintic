@@ -48,12 +48,15 @@ class _AppState extends State<App> {
   void initState() {
     // State management: listening for changes on currentUser
     ever(controller.currentUser, (User? user) {
-      // Using Get.off so we can't go back when auth changes
       // This navigation triggers automatically when auth state changes on the app state
-      if (user != null && _initialized) {
-        Get.off(() => ContentPage());
-      } else {
-        Get.off(() => Authentication());
+      // Only navigate when everything is initialized
+      if (_initialized) {
+        // Using Get.off so we can't go back when auth changes
+        if (user != null) {
+          Get.off(() => ContentPage());
+        } else {
+          Get.off(() => Authentication());
+        }
       }
     });
     // Trigger Firebase initialization
@@ -74,21 +77,14 @@ class _AppState extends State<App> {
       );
     }
 
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      return MaterialApp(
-        theme: MyTheme.ligthTheme,
-        darkTheme: MyTheme.darkTheme,
-        home: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-
     return GetMaterialApp(
       theme: MyTheme.ligthTheme,
       darkTheme: MyTheme.darkTheme,
-      home: Authentication(),
+      home: _initialized
+          ? Authentication()
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

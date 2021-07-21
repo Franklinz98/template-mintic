@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:red_egresados/domain/use_case/auth_management.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 
@@ -39,6 +40,7 @@ class _State extends State<LoginPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   key: Key("signInEmail"),
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -79,6 +81,10 @@ class _State extends State<LoginPage> {
                   key: Key("toSignUpButton"),
                   onPressed: widget.onViewSwitch,
                   child: Text("Registrarse")),
+              SignInButton(
+                Buttons.GoogleDark,
+                onPressed: () => AuthManagement.signInWithGoogle(),
+              )
             ],
           ),
         ),

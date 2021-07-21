@@ -54,4 +54,7 @@ class PasswordAuth implements AuthInterface {
       print(e);
     }
   }
+
+  // We throw an error if someone calls SignInWithGoogle, member of AuthInterface
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

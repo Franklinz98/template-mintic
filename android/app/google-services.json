@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:969854742581:android:dfc9d2e06ef809dcc3417c",
+        "mobilesdk_app_id": "1:969854742581:android:784814c5e16db559c3417c",
         "android_client_info": {
           "package_name": "com.uninorte.red_egresados"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "969854742581-32dl0bdb83nfkk9o922jnleue5jbkf3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uninorte.red_egresados",
+            "certificate_hash": "aafdfd58a2ac199b6980b4aa116e1123cb9d8026"
+          }
+        },
         {
           "client_id": "969854742581-3f3n87djkh0ldmcipuou6k74f924q2df.apps.googleusercontent.com",
           "client_type": 3
