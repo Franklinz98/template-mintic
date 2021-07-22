@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthInterface {
-  Future<void> signUp(
+  Future<bool> signUp(
       {required String name, required String email, required String password});
 
-  Future<void> signIn({required String email, required String password});
+  Future<bool> signIn(
+      {required String email, required String password});
 
-  Future<void> signInWithGoogle();
+  Future<bool> signInWithGoogle();
 
-  Future<void> signOut();
+  Future<bool> signOut();
 
   static Stream<User?> get authStream =>
       FirebaseAuth.instance.authStateChanges();

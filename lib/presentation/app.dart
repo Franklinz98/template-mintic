@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:red_egresados/data/repositories/google_auth.dart';
+import 'package:red_egresados/data/repositories/password_auth.dart';
 import 'package:red_egresados/domain/repositories/auth.dart';
+import 'package:red_egresados/domain/use_case/auth_management.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/presentation/pages/authentication/index.dart';
 import 'package:red_egresados/presentation/pages/content/index.dart';
@@ -33,6 +36,12 @@ class _AppState extends State<App> {
         // Listering for auth state changes
         AuthInterface.authStream.listen(
           (User? user) => controller.updateUser(user),
+        );
+        controller.updateAuthManager(
+          AuthManagement(
+            auth: PasswordAuth(),
+            googleAuth: GoogleAuth(),
+          ),
         );
         _initialized = true;
       });

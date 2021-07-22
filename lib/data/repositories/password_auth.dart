@@ -4,10 +4,11 @@ import 'package:red_egresados/domain/repositories/auth.dart';
 
 class PasswordAuth implements AuthInterface {
   @override
-  Future<void> signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar(
@@ -20,24 +21,30 @@ class PasswordAuth implements AuthInterface {
           "La contraseña proveida por el usuario no es correcta.",
         );
       }
+      return false;
     }
   }
 
   @override
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<bool> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<void> signUp(
+  Future<bool> signUp(
       {required String name,
       required String email,
       required String password}) async {
     try {
-      FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((userCredential) =>
-              {userCredential.user!.updateDisplayName(name)});
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      userCredential.user!.updateDisplayName(name);
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.snackbar(
@@ -53,6 +60,7 @@ class PasswordAuth implements AuthInterface {
     } catch (e) {
       print(e);
     }
+    return false;
   }
 
   // We throw an error if someone calls SignInWithGoogle, member of AuthInterface

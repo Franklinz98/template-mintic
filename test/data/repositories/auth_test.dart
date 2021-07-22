@@ -1,25 +1,26 @@
-/* import 'package:flutter_test/flutter_test.dart';
-import 'package:red_egresados/data/repositories/firebase_auth.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'mock_google_auth.dart';
+import 'mock_password_auth.dart';
 
 void main() {
-  PasswordAuth? auth;
+  late MockPasswordAuth auth;
+  late MockGoogleAuth googleAuth;
 
   // When test starts get a new instance of Auth
   setUp(() {
-    auth = PasswordAuth();
+    auth = MockPasswordAuth();
+    googleAuth = MockGoogleAuth();
   });
 
   // When test ends remove used instance
-  tearDown(() {
-    auth = null;
-  });
+  tearDown(() {});
 
   // Contrast method result with expected value
   test(
     "SignIn valid",
     () async {
       expect(
-          await auth!.signIn(
+          await auth.signIn(
               email: "barry.allen@example.com",
               password: "SuperSecretPassword!"),
           true);
@@ -29,8 +30,15 @@ void main() {
   test(
     "SignIn invalid",
     () async {
-      expect(await auth!.signIn(email: "user@test.com", password: "123456"),
-          false);
+      expect(
+          await auth.signIn(email: "user@test.com", password: "123456"), false);
+    },
+  );
+
+  test(
+    "Google SignIn invalid",
+    () async {
+      expect(await googleAuth.signInWithGoogle(), true);
     },
   );
 
@@ -38,7 +46,7 @@ void main() {
     "SignUp valid",
     () async {
       expect(
-          await auth!.signUp(
+          await auth.signUp(
               name: "User",
               email: "barry.allen@example.com",
               password: "SuperSecretPassword!"),
@@ -50,8 +58,8 @@ void main() {
     "SignUp invalid",
     () async {
       expect(
-          await auth!
-              .signUp(name: "User", email: "usertest.xys", password: "1456"),
+          await auth.signUp(
+              name: "User", email: "usertest.xys", password: "1456"),
           false);
     },
   );
@@ -59,8 +67,7 @@ void main() {
   test(
     "SignOut validation",
     () async {
-      expect(await auth!.signOut(), true);
+      expect(await auth.signOut(), true);
     },
   );
 }
- */

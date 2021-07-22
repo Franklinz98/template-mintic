@@ -66,7 +66,7 @@ class ContentPage extends StatelessWidget {
         tile: Obx(() => _getTitle(controller.screenIndex.value, context)),
         picUrl: "https://uifaces.co/our-content/donated/gPZwCbdS.jpg",
         context: context,
-        onSignOff: () => AuthManagement.signOut(),
+        onSignOff: () => controller.authManager.signOut(),
       ),
       body: SafeArea(
         child: Padding(
