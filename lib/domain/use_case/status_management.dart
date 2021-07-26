@@ -2,16 +2,16 @@ import 'package:red_egresados/data/repositories/firestore_database.dart';
 import 'package:red_egresados/domain/models/userStatus.dart';
 
 class StatusManager {
-  final database = FirestoreDB();
+  final _database = FirestoreDB();
 
   Future<void> sendStatus(UserStatus status) async {
-    await database.add(collectionPath: "statuses", data: status.toJson());
+    await _database.add(collectionPath: "statuses", data: status.toJson());
   }
 
   Future<List<UserStatus>> getStatuses() async {
     List<UserStatus> statuses = [];
     final statusesData =
-        await database.readCollection(collectionPath: "statuses");
+        await _database.readCollection(collectionPath: "statuses");
     statusesData.forEach((statusJson) {
       statuses.add(UserStatus.fromJson(statusJson));
     });
@@ -19,6 +19,6 @@ class StatusManager {
   }
 
   Future<void> removeStatus(UserStatus status) async {
-    await database.deleteDoc(documentPath: status.dbRef!);
+    await _database.deleteDoc(documentPath: status.dbRef!);
   }
 }

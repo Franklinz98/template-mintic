@@ -64,7 +64,8 @@ class ContentPage extends StatelessWidget {
         key: Key("pageTitle"),
         // Fetching state value, with reactivity using Obx
         tile: Obx(() => _getTitle(controller.screenIndex.value, context)),
-        picUrl: "https://uifaces.co/our-content/donated/gPZwCbdS.jpg",
+        picUrl: controller.currentUser.value!.photoURL ??
+            'https://ui-avatars.com/api/',
         context: context,
         onSignOff: () => controller.authManager.signOut(),
       ),

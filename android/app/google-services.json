@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "969854742581-3o57vric2rs4r7eoguouhhtnf1a68m6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uninorte.red_egresados",
+            "certificate_hash": "eb5b33f3bc8b5a542384f8a756dc9041fdd7d5d1"
+          }
+        },
+        {
           "client_id": "969854742581-3f3n87djkh0ldmcipuou6k74f924q2df.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -55,6 +55,8 @@ class FirestoreDB extends FirebaseDB {
     QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
         .collection(collectionPath)
         .where('timestamp', isGreaterThanOrEqualTo: minimumTimestamp)
+        .orderBy('timestamp', descending: true)
+        .limit(15)
         .get();
     List<Map<String, dynamic>> docs = [];
     // Since we fetch all the documents within the collection,
@@ -62,7 +64,7 @@ class FirestoreDB extends FirebaseDB {
     // so that, if necessary, we can apply actions on them in firestore later.
     snapshot.docs.forEach((document) {
       docs.add({
-        "ref": document.reference,
+        "ref": document.reference.path,
         "data": document.data(),
       });
     });

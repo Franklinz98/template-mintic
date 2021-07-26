@@ -44,6 +44,8 @@ class PasswordAuth implements AuthInterface {
       final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       userCredential.user!.updateDisplayName(name);
+      userCredential.user!.updatePhotoURL(
+          'https://ui-avatars.com/api/?name=${name.replaceAll(" ", "+")}&background=random');
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
