@@ -55,7 +55,14 @@ class _State extends State<UsersStates> {
                       title: status.name,
                       content: status.message,
                       picUrl: status.picUrl,
-                      onChat: () => {},
+                      onChat: () {
+                        manager.removeStatus(status).then((value) {
+                          // After delete status we refresh the list
+                          setState(() {
+                            futureStatuses = manager.getStatuses();
+                          });
+                        });
+                      },
                     );
                   },
                 );

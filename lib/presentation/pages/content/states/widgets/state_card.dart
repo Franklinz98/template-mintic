@@ -40,7 +40,7 @@ class StateCard extends StatelessWidget {
       // topRightWidget widget as an IconButton
       topRightWidget: IconButton(
         icon: Icon(
-          Icons.chat_outlined,
+          Icons.close,
           color: AppColors.mountainMeadow,
         ),
         onPressed: onChat,
