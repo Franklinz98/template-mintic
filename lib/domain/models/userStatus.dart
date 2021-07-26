@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserStatus {
   String picUrl, name, email, message;
   String? dbRef;
@@ -26,6 +28,7 @@ class UserStatus {
       "name": name,
       "email": email,
       "message": message,
+      "timestamp": Timestamp.now(),
     };
   }
 }

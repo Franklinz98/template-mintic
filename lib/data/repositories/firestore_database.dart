@@ -42,8 +42,20 @@ class FirestoreDB extends FirebaseDB {
   @override
   Future<List<Map<String, dynamic>>> readCollection(
       {required String collectionPath}) async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _firestore.collection(collectionPath).get();
+    // Since we are going to fetch users interaction data,
+    // we can establish a fetch window, 24 hours in this case.
+
+    // IMPORTANT! This query is case specific.
+
+    // H * m * s * ms
+    final lifeSpan = 24 * 60 * 60 * 1000;
+    final minimumTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch - lifeSpan);
+
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+        .collection(collectionPath)
+        .where('timestamp', isGreaterThanOrEqualTo: minimumTimestamp)
+        .get();
     List<Map<String, dynamic>> docs = [];
     // Since we fetch all the documents within the collection,
     // we also need to save the references of each of the documents,
