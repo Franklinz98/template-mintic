@@ -66,30 +66,9 @@ class _State extends State<UsersStates> {
               // By default, show a loading spinner.
               return Center(child: CircularProgressIndicator());
             },
-          ), /* ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return StateCard(
-                title: 'Iony Houst',
-                content: 'Lorem ipsum dolor sit amet.',
-                picUrl: 'https://uifaces.co/our-content/donated/gPZwCbdS.jpg',
-                onChat: () => {},
-              );
-            },
-          ), */
+          ),
         ),
       ],
     );
-    /* return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return StateCard(
-          title: 'Iony Houst',
-          content: 'Lorem ipsum dolor sit amet.',
-          picUrl: 'https://uifaces.co/our-content/donated/gPZwCbdS.jpg',
-          onChat: () => {},
-        );
-      },
-    ); */
   }
 }
