@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/card.dart';
 
-class PostCard extends StatelessWidget {
+class UserOfferCard extends StatelessWidget {
   final String title, content, picUrl;
   final VoidCallback onChat;
 
-  // PostCard constructor
-  PostCard(
+  // UserOfferCard constructor
+  UserOfferCard(
       {Key? key,
       required this.title,
       required this.content,

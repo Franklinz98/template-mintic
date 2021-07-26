@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:red_egresados/domain/models/userJob.dart';
+import 'package:red_egresados/domain/use_case/jobs_management.dart';
+import 'package:red_egresados/presentation/pages/content/users_offers/widgets/new_offer.dart';
 import 'widgets/offer_card.dart';
 
 class UsersOffers extends StatefulWidget {
@@ -10,22 +14,63 @@ class UsersOffers extends StatefulWidget {
 }
 
 class _State extends State<UsersOffers> {
-  final items = List<String>.generate(20, (i) => "Item $i");
+  late final JobsManager manager;
+  late Future<List<UserJob>> futureOffers;
+
+  @override
+  void initState() {
+    super.initState();
+    manager = JobsManager();
+    futureOffers = manager.getStatuses();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return PostCard(
-          title: 'Ludvig Wiese',
-          content:
-              'Duis non tellus sed quam luctus gravida quis sed libero. Pellentesque luctus lorem eu est varius, eu dignissim leo tincidunt. Fusce eget ante sed mi venenatis tincidunt et rutrum neque. Suspendisse laoreet sapien sed est aliquet fringilla. Fusce fringilla, ante in ultrices volutpat, mauris ',
-          picUrl:
-              'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200',
-          onChat: () => {},
-        );
-      },
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Center(
+            child: ElevatedButton(
+              child: Text("Agregar"),
+              onPressed: () {
+                Get.dialog(
+                  PublishOffer(
+                    manager: manager,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder<List<UserJob>>(
+            future: futureOffers,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final items = snapshot.data!;
+                return ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    UserJob offer = items[index];
+                    return UserOfferCard(
+                      title: offer.name,
+                      content: offer.message,
+                      picUrl: offer.picUrl,
+                      onChat: () => {},
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+
+              // By default, show a loading spinner.
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
+      ],
     );
   }
 }
