@@ -13,7 +13,6 @@ class CustomAppBar extends AppBar {
       required this.onSignOff})
       : super(
             key: key,
-            backgroundColor: Colors.white,
             centerTitle: true,
             leading: Center(
               child: CircleAvatar(
