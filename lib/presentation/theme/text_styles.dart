@@ -33,4 +33,36 @@ class AppTextStyle {
         color: AppColors.mountainMeadow,
         fontWeight: FontWeight.w600,
       );
+
+  // Dark Theme
+
+  // Headline 1
+  static TextStyle get appBarTitleDark => GoogleFonts.openSans(
+        fontSize: 18.0,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
+  // Headline 2
+  static TextStyle get cardTitleDark => GoogleFonts.openSans(
+        fontSize: 16.0,
+        color: Colors.white70,
+        fontWeight: FontWeight.w600,
+      );
+  // Headline 3
+  static TextStyle get extraContentTitleDark => GoogleFonts.openSans(
+        fontSize: 14.0,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
+  // Bodytext 1
+  static TextStyle get cardContentDark => GoogleFonts.roboto(
+        fontSize: 16.0,
+        color: Colors.white70,
+      );
+  // Caption
+  static TextStyle get cardDetailsDark => GoogleFonts.openSans(
+        fontSize: 16.0,
+        color: AppColors.mountainMeadow,
+        fontWeight: FontWeight.w600,
+      );
 }
