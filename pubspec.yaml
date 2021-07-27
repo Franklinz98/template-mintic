@@ -33,6 +33,7 @@ dependencies:
   # For mocking external resources
   mockito: ^5.0.11
   http: ^0.13.3
+  firebase_core: ^1.4.0
 
 dev_dependencies:
   flutter_test:
