@@ -15,7 +15,6 @@ class CustomAppBar extends AppBar {
       required this.onSignOff})
       : super(
             key: key,
-            backgroundColor: Colors.white,
             centerTitle: true,
             leading: Center(
               child: CircleAvatar(
@@ -31,7 +30,6 @@ class CustomAppBar extends AppBar {
                 key: Key("signOutAction"),
                 icon: Icon(
                   Icons.logout,
-                  color: Colors.black,
                 ),
                 onPressed: onSignOff,
               )
