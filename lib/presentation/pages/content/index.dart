@@ -92,7 +92,7 @@ class _State extends State<ContentPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.black87,
+        unselectedItemColor: Theme.of(context).iconTheme.color,
         selectedItemColor: AppColors.mountainMeadow,
         onTap: _onItemTapped,
       ),
