@@ -25,7 +25,10 @@ class OfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppCard(
       title: title,
-      content: content,
+      content: Text(
+        content,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
       // topRightWidget widget as an IconButton
       topRightWidget: IconButton(
         icon: Icon(

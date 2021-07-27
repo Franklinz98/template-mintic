@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:red_egresados/presentation/pages/content/public_offers/index.dart';
 
 class ContentPage extends StatelessWidget {
   const ContentPage({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class ContentPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-          child: PublicOffers(),
+          child: Container(),
         ),
       ),
     );

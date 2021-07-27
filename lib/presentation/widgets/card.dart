@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget {
-  final Widget? topLeftWidget, topRightWidget, extraContent;
-  final String? content;
+  final Widget? topLeftWidget, topRightWidget, content, extraContent;
   final String title;
 
   // AppCard constructor
@@ -66,10 +65,7 @@ class AppCard extends StatelessWidget {
             if (content != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Text(
-                  content!,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+                child: content,
               ),
             if (extraContent != null)
               Padding(
