@@ -103,7 +103,7 @@ class ContentPage extends StatelessWidget {
               ),
             ],
             currentIndex: controller.screenIndex.value,
-            unselectedItemColor: Colors.black87,
+            unselectedItemColor: Theme.of(context).iconTheme.color,
             selectedItemColor: AppColors.mountainMeadow,
             onTap: controller.updateScreenIndex,
           )),
