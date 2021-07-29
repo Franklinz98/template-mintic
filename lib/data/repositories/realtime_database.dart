@@ -4,7 +4,6 @@ import 'package:red_egresados/domain/repositories/database.dart';
 
 class FirestoreDB extends FirebaseDB {
   // We get the Firestore instance
-  final _database = FirebaseDatabase.instance;
   final _dbReference = FirebaseDatabase.instance.reference();
 
   // With the documents collection ref we add a new document,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
+import 'package:red_egresados/presentation/pages/content/chats/index.dart';
 import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/appbar.dart';
 
@@ -27,7 +28,7 @@ class ContentPage extends StatelessWidget {
         _title = "Ubicaciones";
         break;
       case 4:
-        _title = "Perfil";
+        _title = "Chat";
         break;
       default:
         _title = "Estados";
@@ -48,7 +49,7 @@ class ContentPage extends StatelessWidget {
       case 3:
         return UsersLocation();
       case 4:
-        return Container();
+        return UserMessages();
       default:
         return UsersStates();
     }
@@ -66,7 +67,7 @@ class ContentPage extends StatelessWidget {
         picUrl: controller.currentUser.value!.photoURL ??
             'https://ui-avatars.com/api/',
         context: context,
-        onSignOff: () => controller.authManager.signOut(),
+        onAction: () => controller.authManager.signOut(),
       ),
       body: SafeArea(
         child: Padding(
@@ -98,8 +99,8 @@ class ContentPage extends StatelessWidget {
                 label: 'Ubicación',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined),
-                label: 'Perfil',
+                icon: Icon(Icons.chat_bubble_outline),
+                label: 'Mensajes',
               ),
             ],
             currentIndex: controller.screenIndex.value,

@@ -22,10 +22,22 @@ class AppTextStyle {
         color: Colors.black87,
         fontWeight: FontWeight.w700,
       );
+  // Headline 4
+  static TextStyle get chatContentTitle => GoogleFonts.openSans(
+        fontSize: 16.0,
+        color: Colors.black87,
+        fontWeight: FontWeight.w700,
+      );
   // Bodytext 1
   static TextStyle get cardContent => GoogleFonts.roboto(
         fontSize: 16.0,
         color: Colors.black,
+      );
+  // Bodytext 2
+  static TextStyle get chatContent => GoogleFonts.roboto(
+        fontSize: 15.0,
+        color: Colors.black45,
+        fontWeight: FontWeight.w500,
       );
   // Caption
   static TextStyle get cardDetails => GoogleFonts.openSans(
@@ -54,10 +66,22 @@ class AppTextStyle {
         color: Colors.white,
         fontWeight: FontWeight.w700,
       );
+  // Headline 4
+  static TextStyle get chatContentTitleDark => GoogleFonts.openSans(
+        fontSize: 16.0,
+        color: Colors.white70,
+        fontWeight: FontWeight.w700,
+      );
   // Bodytext 1
   static TextStyle get cardContentDark => GoogleFonts.roboto(
         fontSize: 16.0,
         color: Colors.white70,
+      );
+  // Bodytext 2
+  static TextStyle get chatContentDark => GoogleFonts.roboto(
+        fontSize: 14.0,
+        color: Colors.white38,
+        fontWeight: FontWeight.w500,
       );
   // Caption
   static TextStyle get cardDetailsDark => GoogleFonts.openSans(

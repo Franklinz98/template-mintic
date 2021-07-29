@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends AppBar {
   final Widget tile;
+  final bool home;
   final String picUrl;
   final BuildContext context;
-  final VoidCallback onSignOff;
+  final VoidCallback onAction;
 
   // Creating a custom AppBar that extends from Appbar with super();
   CustomAppBar(
@@ -12,7 +13,8 @@ class CustomAppBar extends AppBar {
       required this.context,
       required this.tile,
       required this.picUrl,
-      required this.onSignOff})
+      required this.onAction,
+      this.home = true})
       : super(
             key: key,
             centerTitle: true,
@@ -29,9 +31,9 @@ class CustomAppBar extends AppBar {
               IconButton(
                 key: Key("signOutAction"),
                 icon: Icon(
-                  Icons.logout,
+                  home ? Icons.logout : Icons.close,
                 ),
-                onPressed: onSignOff,
+                onPressed: onAction,
               )
             ]);
 }

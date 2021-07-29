@@ -36,7 +36,9 @@ class MyTheme {
         headline1: AppTextStyle.appBarTitle,
         headline2: AppTextStyle.cardTitle,
         headline3: AppTextStyle.extraContentTitle,
+        headline4: AppTextStyle.chatContentTitle,
         bodyText1: AppTextStyle.cardContent,
+        bodyText2: AppTextStyle.chatContent,
         caption: AppTextStyle.cardDetails,
       ),
     );
@@ -58,7 +60,6 @@ class MyTheme {
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.grey.shade300,
       ),
-
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: Colors.white70,
@@ -76,7 +77,9 @@ class MyTheme {
         headline1: AppTextStyle.appBarTitleDark,
         headline2: AppTextStyle.cardTitleDark,
         headline3: AppTextStyle.extraContentTitleDark,
+        headline4: AppTextStyle.chatContentTitleDark,
         bodyText1: AppTextStyle.cardContentDark,
+        bodyText2: AppTextStyle.chatContentDark,
         caption: AppTextStyle.cardDetailsDark,
       ),
     );
