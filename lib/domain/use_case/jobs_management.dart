@@ -9,6 +9,10 @@ class JobsManager {
     await _database.add(collectionPath: "communityOffers", data: job.toJson());
   }
 
+  Future<void> updateOffer(UserJob job) async {
+    await _database.updateDoc(documentPath: job.dbRef!, data: job.toJson());
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getJobsStream() {
     return _database.listenCollection(collectionPath: "communityOffers");
   }

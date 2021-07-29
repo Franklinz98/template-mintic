@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:red_egresados/domain/models/userJob.dart';
+import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/domain/use_case/jobs_management.dart';
 import 'package:red_egresados/presentation/pages/content/users_offers/widgets/new_offer.dart';
 import 'widgets/offer_card.dart';
@@ -15,12 +16,14 @@ class UsersOffers extends StatefulWidget {
 }
 
 class _State extends State<UsersOffers> {
+  late Controller controller;
   late final JobsManager manager;
   late Stream<QuerySnapshot<Map<String, dynamic>>> offersStream;
 
   @override
   void initState() {
     super.initState();
+    controller = Get.find();
     manager = JobsManager();
     offersStream = manager.getJobsStream();
   }
@@ -37,6 +40,7 @@ class _State extends State<UsersOffers> {
               onPressed: () {
                 Get.dialog(
                   PublishOffer(
+                    controller: controller,
                     manager: manager,
                   ),
                 );
@@ -60,6 +64,25 @@ class _State extends State<UsersOffers> {
                       content: offer.message,
                       picUrl: offer.picUrl,
                       onChat: () => {},
+                      onTap: () {
+                        // If the offer email is the same as the current user,
+                        // we know that the user is the owner of that offer.
+                        if (offer.email ==
+                            controller.currentUser.value!.email) {
+                          Get.dialog(
+                            PublishOffer(
+                              controller: controller,
+                              manager: manager,
+                              userJob: offer,
+                            ),
+                          );
+                        } else {
+                          Get.snackbar(
+                            "No Autorizado",
+                            "No puedes editar esta oferta debido a que fue enviada por otro usuario.",
+                          );
+                        }
+                      },
                     );
                   },
                 );

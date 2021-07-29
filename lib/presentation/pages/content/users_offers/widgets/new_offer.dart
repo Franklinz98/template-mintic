@@ -7,29 +7,34 @@ import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/domain/use_case/jobs_management.dart';
 
 class PublishOffer extends StatefulWidget {
+  final Controller controller;
   final JobsManager manager;
+  final UserJob? userJob;
 
-  PublishOffer({required this.manager});
+  PublishOffer({required this.controller, required this.manager, this.userJob});
 
   @override
   createState() => _State();
 }
 
 class _State extends State<PublishOffer> {
-  late Controller controller;
   late bool _buttonDisabled;
   late TextEditingController offerController;
 
   @override
   void initState() {
     super.initState();
-    controller = Get.find();
     _buttonDisabled = false;
     offerController = TextEditingController();
+    // If there is no userJob object, there will be no message, so we use an empty string
+    offerController.text = widget.userJob?.message ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
+    // Description of the action that we are performing
+    final _dialogAction = widget.userJob != null ? "Actualizar" : "Publicar";
+
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
@@ -37,7 +42,7 @@ class _State extends State<PublishOffer> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Publicar Oferta",
+              "$_dialogAction Oferta",
               style: Theme.of(context).textTheme.headline2,
             ),
             Padding(
@@ -58,22 +63,30 @@ class _State extends State<PublishOffer> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    child: Text("Publicar"),
+                    child: Text(_dialogAction),
                     onPressed: _buttonDisabled
                         ? null
                         : () {
                             setState(() {
                               _buttonDisabled = true;
-                              User user = controller.currentUser.value!;
+                              User user = widget.controller.currentUser.value!;
                               UserJob offer = UserJob(
                                 picUrl: user.photoURL!,
                                 name: user.displayName!,
                                 email: user.email!,
                                 message: offerController.text,
                               );
-                              widget.manager.sendOffer(offer).then(
-                                    (value) => Get.back(),
-                                  );
+                              Future task;
+                              // If userJob is null, this means that this offer is new; otherwise,
+                              // it means that we are updating a previous one.
+                              if (widget.userJob != null) {
+                                offer.dbRef = widget.userJob!.dbRef;
+                                task = widget.manager.updateOffer(offer);
+                              } else
+                                task = widget.manager.sendOffer(offer);
+                              task.then(
+                                (value) => Get.back(),
+                              );
                             });
                           },
                   ),
