@@ -58,6 +58,42 @@ class FirestoreDB extends FirebaseDB {
         .orderBy('timestamp', descending: true)
         .limit(15)
         .get();
+
+    return extractDocs(snapshot);
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenCollection(
+      {required String collectionPath}) {
+    // Since we are going to fetch users interaction data,
+    // we can establish a fetch window, 24 hours in this case.
+
+    // IMPORTANT! This query is case specific.
+
+    // H * m * s * ms
+    final lifeSpan = 24 * 60 * 60 * 1000;
+    final minimumTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch - lifeSpan);
+
+    return FirebaseFirestore.instance
+        .collection(collectionPath)
+        .where('timestamp', isGreaterThanOrEqualTo: minimumTimestamp)
+        .orderBy('timestamp', descending: true)
+        .limit(15)
+        .snapshots();
+  }
+
+  // We update the specified fields in the document
+  // specified by the document reference
+  @override
+  Future<void> updateDoc(
+      {required String documentPath,
+      required Map<String, dynamic> data}) async {
+    await _firestore.doc(documentPath).update(data);
+  }
+
+  List<Map<String, dynamic>> extractDocs(
+      QuerySnapshot<Map<String, dynamic>> snapshot) {
     List<Map<String, dynamic>> docs = [];
     // Since we fetch all the documents within the collection,
     // we also need to save the references of each of the documents,
@@ -69,14 +105,5 @@ class FirestoreDB extends FirebaseDB {
       });
     });
     return docs;
-  }
-
-  // We update the specified fields in the document
-  // specified by the document reference
-  @override
-  Future<void> updateDoc(
-      {required String documentPath,
-      required Map<String, dynamic> data}) async {
-    await _firestore.doc(documentPath).update(data);
   }
 }

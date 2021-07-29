@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:red_egresados/domain/models/userStatus.dart';
@@ -15,13 +16,13 @@ class UsersStates extends StatefulWidget {
 
 class _State extends State<UsersStates> {
   late final StatusManager manager;
-  late Future<List<UserStatus>> futureStatuses;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> statusesStream;
 
   @override
   void initState() {
     super.initState();
     manager = StatusManager();
-    futureStatuses = manager.getStatuses();
+    statusesStream = manager.getStatusesStream();
   }
 
   @override
@@ -42,11 +43,12 @@ class _State extends State<UsersStates> {
           ),
         ),
         Expanded(
-          child: FutureBuilder<List<UserStatus>>(
-            future: futureStatuses,
-            builder: (context, snapshot) {
+          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: statusesStream,
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (snapshot.hasData) {
-                final items = snapshot.data!;
+                final items = manager.extractStatuses(snapshot.data!);
                 return ListView.builder(
                   itemCount: items.length,
                   itemBuilder: (context, index) {
@@ -56,18 +58,13 @@ class _State extends State<UsersStates> {
                       content: status.message,
                       picUrl: status.picUrl,
                       onChat: () {
-                        manager.removeStatus(status).then((value) {
-                          // After delete status we refresh the list
-                          setState(() {
-                            futureStatuses = manager.getStatuses();
-                          });
-                        });
+                        manager.removeStatus(status);
                       },
                     );
                   },
                 );
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                return Text('Something went wrong: ${snapshot.error}');
               }
 
               // By default, show a loading spinner.
