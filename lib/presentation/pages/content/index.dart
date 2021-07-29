@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:red_egresados/domain/use_case/auth_management.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/presentation/theme/colors.dart';
 import 'package:red_egresados/presentation/widgets/appbar.dart';

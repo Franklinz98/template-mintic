@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:red_egresados/domain/use_case/auth_management.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 
 class LoginPage extends StatefulWidget {

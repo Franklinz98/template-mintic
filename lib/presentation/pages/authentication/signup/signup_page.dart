@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:red_egresados/domain/use_case/auth_management.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 
 class SignUpPage extends StatefulWidget {
