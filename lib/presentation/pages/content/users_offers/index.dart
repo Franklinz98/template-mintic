@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:red_egresados/domain/models/userJob.dart';
@@ -15,13 +16,13 @@ class UsersOffers extends StatefulWidget {
 
 class _State extends State<UsersOffers> {
   late final JobsManager manager;
-  late Future<List<UserJob>> futureOffers;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> offersStream;
 
   @override
   void initState() {
     super.initState();
     manager = JobsManager();
-    futureOffers = manager.getStatuses();
+    offersStream = manager.getJobsStream();
   }
 
   @override
@@ -44,11 +45,12 @@ class _State extends State<UsersOffers> {
           ),
         ),
         Expanded(
-          child: FutureBuilder<List<UserJob>>(
-            future: futureOffers,
-            builder: (context, snapshot) {
+          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: offersStream,
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (snapshot.hasData) {
-                final items = snapshot.data!;
+                final items = manager.extractOffers(snapshot.data!);
                 return ListView.builder(
                   itemCount: items.length,
                   itemBuilder: (context, index) {
@@ -62,7 +64,7 @@ class _State extends State<UsersOffers> {
                   },
                 );
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                return Text('Something went wrong: ${snapshot.error}');
               }
 
               // By default, show a loading spinner.

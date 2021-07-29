@@ -49,7 +49,7 @@ class _State extends State<PublishOffer> {
                 maxLines: null,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Estado',
+                  labelText: 'Oferta',
                 ),
               ),
             ),
@@ -71,7 +71,7 @@ class _State extends State<PublishOffer> {
                                 email: user.email!,
                                 message: offerController.text,
                               );
-                              widget.manager.sendStatus(offer).then(
+                              widget.manager.sendOffer(offer).then(
                                     (value) => Get.back(),
                                   );
                             });
