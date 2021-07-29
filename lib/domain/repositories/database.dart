@@ -12,6 +12,8 @@ abstract class FirebaseDB {
   Future<List<Map<String, dynamic>>> readCollection(
       {required String collectionPath});
 
+  Stream listenCollection({required String collectionPath});
+
   Future<void> updateDoc(
       {required String documentPath, required Map<String, dynamic> data});
 
