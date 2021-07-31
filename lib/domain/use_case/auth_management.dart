@@ -2,8 +2,8 @@ import 'package:red_egresados/data/repositories/google_auth.dart';
 import 'package:red_egresados/data/repositories/password_auth.dart';
 
 class AuthManagement {
-  PasswordAuth auth = PasswordAuth();
-  GoogleAuth googleAuth = GoogleAuth();
+  PasswordAuth auth;
+  GoogleAuth googleAuth;
 
   AuthManagement({required this.auth, required this.googleAuth});
 

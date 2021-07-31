@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatCard extends StatelessWidget {
   final String pictureUrl, name, message;
+  final int time;
   final VoidCallback onTap;
 
   // ChatCard constructor
@@ -10,6 +12,7 @@ class ChatCard extends StatelessWidget {
       required this.pictureUrl,
       required this.name,
       required this.message,
+      required this.time,
       required this.onTap})
       : super(key: key);
 
@@ -46,12 +49,24 @@ class ChatCard extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText2,
         ),
         trailing: Text(
-          '29/09/2021',
+          _getTime(),
           style:
               Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0),
         ),
         onTap: onTap,
       ),
     );
+  }
+
+  String _getTime() {
+    final messageTime = DateTime.fromMillisecondsSinceEpoch(time);
+    final window = DateTime.now().subtract(Duration(days: 1));
+    late DateFormat formatter;
+    if (messageTime.isAfter(window)) {
+      formatter = DateFormat('hh:mm a');
+    } else {
+      formatter = DateFormat('dd/MM/yyyy');
+    }
+    return formatter.format(messageTime);
   }
 }

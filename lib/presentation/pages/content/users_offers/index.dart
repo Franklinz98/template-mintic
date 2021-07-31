@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:red_egresados/domain/models/chat.dart';
+import 'package:red_egresados/domain/models/message.dart';
+import 'package:red_egresados/domain/models/user.dart';
 import 'package:red_egresados/domain/models/userJob.dart';
 import 'package:red_egresados/domain/use_case/controller.dart';
 import 'package:red_egresados/domain/use_case/jobs_management.dart';
+import 'package:red_egresados/presentation/pages/chat/index.dart';
 import 'package:red_egresados/presentation/pages/content/users_offers/widgets/new_offer.dart';
 import 'widgets/offer_card.dart';
 
@@ -63,7 +68,23 @@ class _State extends State<UsersOffers> {
                       title: offer.name,
                       content: offer.message,
                       picUrl: offer.picUrl,
-                      onChat: () => {},
+                      onChat: () {
+                        User user = controller.currentUser.value!;
+                        if (offer.email != user.email) {
+                          Get.to(
+                            () => ChatPage(
+                              localUser: ChatUser(
+                                  name: user.displayName!,
+                                  email: user.email!,
+                                  pictureUrl: user.photoURL!),
+                              remoteUser: ChatUser(
+                                  name: offer.name,
+                                  email: offer.email,
+                                  pictureUrl: offer.picUrl),
+                            ),
+                          );
+                        }
+                      },
                       onTap: () {
                         // If the offer email is the same as the current user,
                         // we know that the user is the owner of that offer.

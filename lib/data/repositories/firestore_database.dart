@@ -5,6 +5,10 @@ class FirestoreDB extends FirebaseDB {
   // We get the Firestore instance
   final _firestore = FirebaseFirestore.instance;
 
+  FirebaseFirestore get databaseInstance {
+    return _firestore;
+  }
+
   // With the documents collection ref we add a new document,
   // the reference will be set automatically
   @override
