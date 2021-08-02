@@ -5,9 +5,8 @@ class PublicOffers extends StatefulWidget {
   // PublicOffes empty constructor
   PublicOffers({Key? key}) : super(key: key);
 
-/*
-  User HERE the created state for this widget, as explained by the instructor.
- */
+  @override
+  _State createState() => _State();
 }
 
 class _State extends State<PublicOffers> {
