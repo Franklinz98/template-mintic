@@ -5,8 +5,9 @@ class UsersStates extends StatefulWidget {
   // UsersStates empty constructor
   UsersStates({Key? key}) : super(key: key);
 
-  @override
-  _State createState() => _State();
+/*
+  User HERE the created state for this widget, as explained by the instructor.
+ */
 }
 
 class _State extends State<UsersStates> {
