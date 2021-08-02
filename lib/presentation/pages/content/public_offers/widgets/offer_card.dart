@@ -8,16 +8,10 @@ class OfferCard extends StatelessWidget {
   final VoidCallback onCopy, onApply;
 
   // OfferCard constructor
-  OfferCard(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.arch,
-      required this.level,
-      required this.payment,
-      required this.onCopy,
-      required this.onApply})
-      : super(key: key);
+
+  /*
+    Implement HERE widget constructor with required params
+ */
 
   // We create a Stateless widget that contais an AppCard,
   // Passing all the customizable views as parameters

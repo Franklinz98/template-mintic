@@ -7,13 +7,10 @@ class StateCard extends StatelessWidget {
   final VoidCallback onChat;
 
   // StateCard constructor
-  StateCard(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.picUrl,
-      required this.onChat})
-      : super(key: key);
+
+  /*
+    Implement HERE widget constructor with required params
+ */
 
   // We create a Stateless widget that contais an AppCard,
   // Passing all the customizable views as parameters

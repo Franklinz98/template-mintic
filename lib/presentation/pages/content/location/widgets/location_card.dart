@@ -9,14 +9,10 @@ class LocationCard extends StatelessWidget {
   final VoidCallback? onUpdate;
 
   // PostCard constructor
-  LocationCard(
-      {Key? key,
-      required this.title,
-      required this.lat,
-      required this.long,
-      this.distance,
-      this.onUpdate})
-      : super(key: key);
+
+  /*
+    Implement HERE widget constructor with required params
+ */
 
   // We create a Stateless widget that contais an AppCard,
   // Passing all the customizable views as parameters
